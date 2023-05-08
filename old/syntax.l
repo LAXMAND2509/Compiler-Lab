@@ -17,15 +17,20 @@
 ^#.* { printf("%s is an PPD\n", yytext);return PPD;}
 "if" {printf("IF PART\n"); return IF;}
 "while" {printf("WHILE LOOP\n"); return WHILE;}
-"else" {return printf("ELSE PART\n"); ELSE;}
+"for" {printf("FOR LOOP\n"); return FOR; }
+"else" {printf("ELSE PART\n"); return ELSE;}
+"return" {printf("RETURN is a keyword\n"); return RETURN;}
+"printf"[^\n]* {printf("printf is a function\n"); return PRINTF;}
 [_a-zA-Z][a-zA-Z0-9_]* { printf("%s is an identifier\n", yytext);return ID; }
 ";" {printf("End of statement\n\n");return EOS;}
 (">"|"<"|"<="|">="|"!="|"==") { printf("%s is comparison operator\n",yytext); return COMPARISON_OP; }
 ("+="|"-="|"*="|"/="|"%="|"=") { printf("%s is an assign op\n", yytext);return ASSIGN_OP; }
+("++"|"--") { printf("%s is an incr-decr op\n", yytext);return INDE_OP; }
 ">>" { printf("rs operator\n"); return RSHIFT; }
 "<<" {printf("ls operator\n"); return LSHIFT; }
 "!" { printf("NOW operator\n"); return NOT; }
 "||" {printf("OR operator\n"); return OR; }
+"//".* {printf("Single Line Comment\n");return COMMENT;}
 "&&" {printf("AND operator\n"); return AND; }
 "{" { printf("\n-----START_BLOCK-----\n"); return *yytext; }
 "}" { printf("-----END_BLOCK-----\n\n"); return *yytext; }

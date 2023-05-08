@@ -6,10 +6,9 @@
     extern FILE* yyin;
     #include "y.tab.h"
     int error = 0;
-    /*extern int debug;*/
     extern int line;
 %}
-%token PPD NUM VOID ID EOS DTYPE LSHIFT RSHIFT NOT AND OR ARITH_OP ASSIGN_OP COMPARISON_OP IF ELSE WHILE
+%token PPD NUM VOID ID EOS DTYPE LSHIFT RSHIFT NOT AND OR ARITH_OP INDE_OP ASSIGN_OP COMPARISON_OP IF ELSE WHILE FOR RETURN COMMENT PRINTF
 
 %%
 program: statement program | statement;
@@ -17,11 +16,19 @@ statement : PPD
 | assgn_statement EOS
 | cond_statement
 | loop_block
-| '{' program '}'
+| RETURN ' ' NUM ' ' EOS
+| COMMENT
+| PRINTF '(' ')'
+| DTYPE ID '(' ')' '{' program '}'
 | declaration EOS;
 
-loop_block  : WHILE '(' expr ')' statement;
+loop_block  : for_loop | while_loop;
 
+for_loop    : FOR '(' assign EOS pred EOS inde ')' statement;
+
+while_loop  : WHILE '(' expr ')' statement;
+
+assign  : declaration | assgn_statement; 
 
 declaration : DTYPE variable;
 
@@ -45,15 +52,20 @@ expr    : expr ARITH_OP expr
         | '(' expr ')' 
         | expr LSHIFT expr 
         | expr RSHIFT expr 
-        | expr COMPARISON_OP expr
         | NUM
         | NUM '.' NUM 
         | ID
+        | pred
+        | inde
         ;
+
+pred    : expr COMPARISON_OP expr;
+
+inde    : expr INDE_OP;
 %%
 
 int yyerror(){
-    fprintf(stderr, "Syntax is NOT valid!Error at line %d\n", line);
+    fprintf(stderr, "Syntax is NOT valid!Error at line %d\n", line+1);
     error = 1;
     return 0;
 }

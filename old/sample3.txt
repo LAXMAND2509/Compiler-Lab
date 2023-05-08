@@ -1,0 +1,6 @@
+#include<stdio.h>
+{
+	int num1=10,sum,num2=5;	
+    sum = num1 + num2;  
+    printf("%d + %d = %d", num1, num2, sum);
+}

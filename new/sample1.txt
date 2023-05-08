@@ -1,0 +1,9 @@
+#include <stdio.h>  
+
+    int num1 = 10, num2 = 20, sum;  
+    
+    // calculate the sum
+    sum = num1 + num2;      
+    
+    printf("%d + %d = %d", num1, num2, sum);
+    return 0;

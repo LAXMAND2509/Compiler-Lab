@@ -1,6 +1,10 @@
 %{  
     #include<stdio.h>
     #include<string.h>
+    #include<stdlib.h>
+    #include "y.tab.h"
+    int debug=0;
+    int line=0;
 %}
 
 ppd ^#.*(\n)
@@ -17,10 +21,10 @@ charConst \'.\'
 strConst \".*\"
 bitWise "^"|"&"|"|"|"<<"|">>"
 arr {id}("["(.)*"]")
-assgn "="
+assign "="
 incr "++"
 decr "--"
-arithAssgn "+="|"-="|"*="|"/="|"%="
+arithAssign "+="|"-="|"*="|"/="|"%="
 relat ">="|"<="|"<"|">"|"=="
 arith "+"|"-"|"*"|"<"|">"|"%"
 logic &&|\|\||!
@@ -46,22 +50,22 @@ bracket ("[".*)|("]".*)
     yyless(pos);
     printf("%s \t\t- name-function\n",yytext);
 }
-{arr}   {printf("%s \t\t- Array notation\n",yytext);}
-{id}            {printf("%s \t\t- identifier\n", yytext);}
-{floatConst}    {printf("%s \t\t- decimal constant\n", yytext);}
-{intConst}      {printf("%s \t\t- integer constant\n", yytext);}
-{charConst}     {printf("%s \t\t- Character Constant\n", yytext);}
-{strConst}   {printf("%s \t\t- String Constant\n", yytext);}
-{bitWise}     {printf("%s \t\t- bitwise Operator\n", yytext);}
-{assgn}      {printf("%s \t\t- Assignment Operator\n", yytext);}
-{arithAssgn} {printf("%s \t\t- Arithmetic Assignment Operator\n", yytext);}
-{incr}  {printf("%s \t\t- increment Operator\n", yytext);}
-{decr}  {printf("%s \t\t- decrement Operator\n", yytext);}
-{arith}       {printf("%s \t\t- Arithmetic Operator\n", yytext);}
-{logic}       {printf("%s \t\t- Logical Operator\n", yytext);}
-{relat}         {printf("%s \t\t- Relational Operator\n", yytext);}
-{splChars}    {printf("%s \t\t- special Character\n", yytext);}
-{space} {printf("%s \t\t- White Space\n", yytext);}
+{arr}   {printf("%s \t\t- Array notation\n",yytext); return ARR;}
+{id}            {printf("%s \t\t- identifier\n", yytext); return ID;}
+{floatConst}    {printf("%s \t\t- decimal constant\n", yytext); return FLOATCONST;}
+{intConst}      {printf("%s \t\t- integer constant\n", yytext); return INTCONST;}
+{charConst}     {printf("%s \t\t- Character Constant\n", yytext); return CHARCONST;}
+{strConst}   {printf("%s \t\t- String Constant\n", yytext); return STRCONST;}
+{bitWise}     {printf("%s \t\t- bitwise Operator\n", yytext); return BITWISE;}
+{assign}      {printf("%s \t\t- Assignment Operator\n", yytext); return ASSIGN;}
+{arithAssign} {printf("%s \t\t- Arithmetic Assignment Operator\n", yytext); return ARRITHASSIGN;}
+{incr}  {printf("%s \t\t- increment Operator\n", yytext); return INCR;}
+{decr}  {printf("%s \t\t- decrement Operator\n", yytext);  return DECR;}
+{arith}       {printf("%s \t\t- Arithmetic Operator\n", yytext); return ARITH;}
+{logic}       {printf("%s \t\t- Logical Operator\n", yytext); return LOGIC;}
+{relat}         {printf("%s \t\t- Relational Operator\n", yytext);return RELAT;}
+{splChars}    {printf("%s \t\t- special Character\n", yytext); return SPLCHAR;}
+{space} {printf("%s \t\t- White Space\n", yytext);return SPACE;}
 . {printf("%s \t\t-unknown token\n",yytext);}
 %%
 

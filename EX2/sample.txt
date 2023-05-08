@@ -1,0 +1,7 @@
+#include<stdio.h>
+//This is laxman
+/* heeeey 
+    sdfsd
+*/
+#include<string.h>    
+/*sdfsdfsdf */

@@ -3,6 +3,6 @@ int main(){
     int num1=10,num2=20,sum;
     sum=num1+num2;
     // comment
-    printf("%d",&num1);
+    printf ("%d",&num1);
     return 0;
 }

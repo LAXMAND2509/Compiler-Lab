@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<string.h>
+int main(){
+    int a,b=10,sum;
+    //comment
+    sum = a+b;
+    printf("this is laxman",a,b);
+    while(a<b){
+        a=10;
+    }
+    for(int i=0;i<10;i++){
+        b=10;
+    }
+    if(a<b){
+        printf("a is small");
+    }
+    else{
+        b=2;
+        b=99;
+        /* This is multi 
+        line comment */
+        printf("a is big");
+    }
+    return 0;
+}

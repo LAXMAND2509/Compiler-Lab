@@ -16,11 +16,13 @@ statement : PPD
 | assgn_statement EOS
 | cond_statement
 | loop_block
-| RETURN ' ' NUM ' ' EOS
+| RETURN ' ' NUM EOS
 | COMMENT
 | PRINTF '(' ')'
-| DTYPE ID '(' ')' '{' program '}'
-| declaration EOS;
+| DTYPE ID '('')' '{' program '}'
+| declaration EOS
+| '\n'
+;
 
 loop_block  : for_loop | while_loop;
 
